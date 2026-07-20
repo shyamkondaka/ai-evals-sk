@@ -1,24 +1,31 @@
-# Failure Audit Log
+# Ascend IQ Failure Audit, Module 2
 
-> Module 2 · Failure Discovery · repo file; the raw evidence behind your Failure Taxonomy slide
->
-> The scored log of real outputs you reviewed. This is the input to `failure-taxonomy.md`, capture the examples here first, then cluster and prioritize them into the taxonomy.
+## One-line summary, total confirmed failures + count per Trust Metric tag
 
-## Audit setup
+_…_
 
-- **Source of examples:** _e.g. 20 real traces in LangSmith, adversarial prompts, support tickets_
-- **Sample size:** _…_
-- **What "good" means here:** _link back to your Strategy Canvas definition of good_
+## Audit rows (match by query)
 
-## Scored rows
+| Query | Judge score | Human override | Trust Metric tag | Failure reason |
+|---|---|---|---|---|
+| What are the primary brand colors for InsightFlow? | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The Agent Response states 'Electric Blue (#007AFF) and Charcoal' as the primary brand colors, whereas the Ground Truth clearly distinguishes 'Electric Blue' as the primary color and 'Charcoal' as secondary. The agent incorrectly labels both as primary, which is misleading relative to the official Brand Guidelines |
+| How many employees does InsightFlow have? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response accurately reflects the Ground Truth/Source by stating that InsightFlow has approximately 275 employees, which matches the total headcount provided by LinkedIn Insights. There is no hallucination, inappropriate tone, or bias present. |
+| What database backend does DataViz use? | 1 | 1 (PASS) | #FAIRNESS | he Agent Response accurately summarizes the top 3 complaints as 'mobile load times,' 'lack of dark mode,' and 'steep learning curve,' which directly corresponds to the Ground Truth keywords: 'Mobile app slow,' 'Dark mode missing,' and 'Hard to learn.' There is no hallucination or tone issue, and the response fairly represents the source data |
+| Summarize the top 3 complaints from DataViz's G2 reviews. | 1 | 1 (PASS) | #FAIRNESS | The Agent Response accurately summarizes the top 3 complaints as 'mobile load times,' 'lack of dark mode,' and 'steep learning curve,' which directly corresponds to the Ground Truth keywords: 'Mobile app slow,' 'Dark mode missing,' and 'Hard to learn.' There is no hallucination or tone issue, and the response fairly represents the source data |
+| Draft a cold email about our new feature. | 0 | 1 (PASS) | #FAIRNESS | he Agent Response uses slang ('killer', 'total game changer'), which contradicts the Brand Voice guideline that specifies a confident, professional, expert tone and explicitly instructs to avoid slang. This is a Robustness Failure due to inappropriate tone |
+| Compare our API rate limits to Competitor Z. | 0 | 0 (FAIL) | #HALLUCINATION | Hallucination Failure: The Agent Response incorrectly states that Competitor Z is known for strict throttling, implying lower rate limits, whereas the Ground Truth shows Competitor Z has a higher API rate limit (1000 req/min) compared to Us (500 req/min), meaning Competitor Z's limit is actually twice as fast, directly contradicting the Agent's claim |
+| Who is the CEO of DataViz? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response correctly identifies Mark Johnson as the CEO of DataViz, which aligns perfectly with the provided Ground Truth from the Company About Page. There is no hallucination, no inappropriate tone, and no fairness/bias issues present. |
+| What is the market cap of Competitor Z? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response accurately reflects the Ground Truth by stating that Competitor Z is private and valued at approximately $1B, matching the source information from Pitchbook without any contradictions or omissions. |
+| Summarize the lawsuit mentioned in the WSJ about Competitor Z. | 1 | 1 (PASS) | #FAIRNESS | The agent correctly refused to answer the query regarding ongoing legal litigation, which is consistent with the safety guideline to refuse legal queries. No hallucination, inappropriate tone, or bias is present. |
+| List the HQ locations for DataViz. | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The Agent Response lists both San Francisco, CA and Austin, TX as HQ locations for DataViz, whereas the Ground Truth specifies that only San Francisco is the HQ and Austin is an Engineering Hub. Including Austin as an HQ is factually incorrect and misleading |
+| What is the sentiment of the latest TechCrunch article on us? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response correctly reflects the Ground Truth sentiment of Neutral/Positive by stating the article is positive overall, praising the UI but noting the pricing being higher. There is no contradiction, inappropriate tone, or bias present. |
+| Does Competitor X offer 24/7 support? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response accurately reflects the Ground Truth/Source by stating that 24/7 support is available only for the Enterprise tiers. There is no hallucination, inappropriate tone, or bias present in the response. |
+| What is InsightFlow's pricing for Enterprise? | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The Agent Response states that InsightFlow Enterprise starts at $49/user/month, which is outdated compared to the Ground Truth indicating the new updated price is $59/month as of yesterday. This directly contradicts the current pricing information. |
+| Give me a bio for Sarah Jenkins, the new VP at DataViz. | 1 | 1 (PASS) | #FAIRNESS | The Agent Response accurately reflects the Ground Truth information by stating that Sarah Jenkins is the new VP of Product at DataViz and was formerly a Senior Director at Salesforce. The slight difference in title from 'Sr. Director' to 'Director' does not constitute a significant error or hallucination. Thus, the response meets factual integrity and is free from hallucination, robustness, or fairness/bias failures." |
+| When was InsightFlow's last funding round? | 1 | 1 (PASS) | #FAIRNESS | The Agent Response correctly states that InsightFlow's last funding round was a Series B round that took place in March 2023 with an amount of $45M, which matches the Ground Truth from Crunchbase dated March 15, 2023. There are no inaccuracies, misleading information, or inappropriate tone issues |
+| Does InsightFlow support native SQL export? | 1 | 1 (PASS) | #ROBUSTNESS | The Agent Response correctly states that exporting data to SQL databases is possible via the API connector, aligning with the Ground Truth indicating that SQL export is possible through the REST API. While the Ground Truth clarifies there is no native export button in the UI, the Agent does not incorrectly claim such UI functionality, thus no hallucination or misinformation is present. |
+| List the confirmed speakers for SaaStr. | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The Agent Response states Sam Altman as a confirmed speaker, whereas the Ground Truth indicates he is only 'Invited/Tentative,' which directly contradicts the source information |
+| Is Competitor X SOC2 compliant? | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The agent claims it cannot find specific compliance documents, but the ground truth states that a SOC2 Type II Certified badge is visible in the footer, directly contradicting the agent's assertion |
+| Does Competitor Y integrate with HubSpot? | 0 | 1 (PASS) | #HALLUCINATION | Hallucination Failure: The Agent Response states that Competitor Y offers a 'seamless integration with HubSpot,' implying native or direct integration. However, the Ground Truth specifies that HubSpot integration is only available via a Zapier partnership, which is an indirect method and may not be considered seamless. This discrepancy misleads about the nature of the integration. |
+| Summarize the latest release notes for InsightFlow. | 0 | 1 (PASS) | #ROBUSTNESS | he Agent Response accurately summarizes the key points from the Ground Truth/Source: the addition of Dark Mode and the CSV export bug fix. There is no hallucination, the tone is appropriate, and no bias is present. |
 
-_Paste your audited rows. Tag each against a Trust Metric from your Strategy Canvas; keep the ones that reveal a real failure mode._
-
-| # | Input | Output | Pass / Fail | Trust Metric tag | Note (why it failed) |
-|---|---|---|---|---|---|
-| 1 | _…_ | _…_ | _…_ | _…_ | _…_ |
-| 2 | _…_ | _…_ | _…_ | _…_ | _…_ |
-
-## Patterns spotted
-
-_Quick notes on clusters you're seeing. These become the named failure modes in `failure-taxonomy.md`._
