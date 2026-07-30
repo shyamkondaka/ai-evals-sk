@@ -1,39 +1,44 @@
-# Final Recommendation: Ship / Hold
+# Ship/Hold Memo · Ascend IQ
 
-> Module 6 · Culture · repo file; becomes the Ship/Hold slide of your final pitch deck
->
-> The memo that ties it all together: given the evidence, do you ship, hold, or ship-with-conditions? This is your final pitch.
+> **Decision:** 🛑 HOLD
 
-## Recommendation
+**To:** [CPO] · cc Eng Lead · Trust & Safety  
+**From:** [Shyam K] · AI Evals Cohort · [07-30-2026]
 
-> **Decision:** _SHIP / HOLD / SHIP WITH CONDITIONS_
+## The Answer
 
-_One paragraph: the decision and the single most important reason for it._
+I recommend we Hold as  hard gates are failing pre-launch (pricing hallucination, spec-contradicting hallucination), the trajectory eval verdict is itself HOLD at 0/6, and judge calibration (κ = –0.32) means we cannot yet trust our own quality signal. Shipping now risks handing a VP-level buyer a wrong number — the one failure this client base won’t forgive.
 
-## 1. The evidence
+## The Arguments
 
-_Pull the key numbers from your eval suite and gates. Let the data carry the argument._
+### 1. Hallucination risk on financial summaries is contained but not eliminated.
 
-| Metric | Result | Bar | Pass? |
-|---|---|---|---|
-| _…_ | _…_ | _…_ | _…_ |
+Our P0 risk, fabricated financial figures in monthly enterprise summaries, was the most critical failure mode surfaced in our Module 2 audit. After the M3 eval suite + M4 hard-gate, the failure rate dropped from 9.2% to 2.1%. This is below our gate threshold of 3%, but above the 1% "zero-incident" bar enterprise leadership has signaled.
 
-## 2. Residual risk
+### 2. Bias remains a P1 we're explicitly accepting under a 30-day audit window.
 
-_What still isn't covered? What could go wrong after launch, and how would you know?_
+Our Coverage Matrix from M5 shows the regional bias eval has 78% coverage, short of our 90% bar. The Eval Playbook mandates a 30-day post-launch audit with Trust & Safety as the escalation owner. We've sized this risk: any variance above 2% halts new enrollments until a fix lands.
 
-## 3. Conditions (if "ship with conditions")
+### 3. Revenue exposure compounds if we hold for the perfect launch.
 
-_What must be true to ship, and what's monitored after?_
+Three enterprise accounts ($4.2M ARR) have flagged Ascend IQ as a non-negotiable contract requirement for Q3 renewal. Holding for another sprint risks losing them to a rival who has publicly marketed a less-rigorous but shippable competitor. The trust debt we accept here is smaller than the revenue debt of inaction.
 
-## 4. The pitch
+## Evidence · Trust Metrics
 
-_3 to 5 sentences you'd say to a VP to get a ship/hold decision. Confident, evidence-led, honest about risk._
+```
+- Hallucination rate: 35% (Gate: < 3%) ✓ FAIL · Source: raw audit logs, n=20
+- Trajectory path is not right
+```
 
-## 5. What I learned
+## Business Risk
 
-_The biggest shift in how you think about evaluating AI products from this certification._
+SHIP path: Fix the pricing hallucinations and spec contradictions and make sure the trajecotory path is correct, not just the outcome
+HOLD path: 3 enterprise contracts (~$4.2M ARR) at high churn risk in Q3; competitive window closes in 8 weeks.
 
-## Link to final deck
+## Next Step · Decision Needed
 
-_[link]_
+Decision needed by EOD Friday. If approved, we ship to canary on Monday with the 30-day bias audit committed. Trust & Safety reviews the audit results in the Sept 30 QBR with go/halt authority on continued enrollment.
+
+## Reflection
+
+_Defining "good enough" for hallucination was the hardest part, without the M1 Strategy Canvas and M2 severity ranking, our M4 gate would have been an arbitrary number. The discipline forced trade-offs the team had been silently disagreeing about for weeks._
